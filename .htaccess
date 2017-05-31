@@ -1,0 +1,26 @@
+# use custom 404 error page
+ErrorDocument 404 /404
+
+# turn on mod_rewrite Apache module
+RewriteEngine On
+
+# base folder for the site
+RewriteBase /
+
+# rewrite all other URLs to the index.php file,
+# using the url as the action variable
+
+# clean up the 'delete' URLS
+# RewriteRule ^delete/(.*)$ index.php?action=delete&delete-id=$1 [QSA]
+
+# clean up the 'complete' URLS
+# RewriteRule ^completed/(.*)$ index.php?action=completed&completed-id=$1 [QSA]
+
+# if the file being requested exists in the site, don't rewrite
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# if the directory being requested exists in the site, don't rewrite
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# the general case (all other pages)
+RewriteRule ^(.*)$ index.php?action=$1 [QSA]
